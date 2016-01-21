@@ -1,6 +1,6 @@
 # SimpleGL
 Simple Implementation of OpenGL
 
-##Dependencies
+###Dependencies
 - GLFW 
 - GLEW 
