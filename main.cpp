@@ -32,8 +32,8 @@ int main()
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (char *)(sizeof(float) * 2));
 
-    SimpleGLShader fragShader("../../shaders/FragmentShader.frag", GL_FRAGMENT_SHADER);
-    SimpleGLShader vertShader("../../shaders/VertexShader.vert", GL_VERTEX_SHADER);
+    SimpleGLShader fragShader("../../shaders/FragmentShader.glsl", GL_FRAGMENT_SHADER);
+    SimpleGLShader vertShader("../../shaders/VertexShader.glsl", GL_VERTEX_SHADER);
 
     GLuint shaderProgramID = glCreateProgram();
     glAttachShader(shaderProgramID, vertShader.shaderID);
