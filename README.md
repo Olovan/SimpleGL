@@ -2,5 +2,5 @@
 Simple Implementation of OpenGL
 
 ##Dependencies
--GLFW 
--GLEW 
+- GLFW 
+- GLEW 
