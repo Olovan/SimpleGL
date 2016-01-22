@@ -1,6 +1,11 @@
 #include "Shader.h"
 
-#include <iostream>
+#include <iostream> //cout endl;
+using std::cout;
+using std::endl;
+using std::string;
+using std::ifstream;
+using std::istreambuf_iterator;
 
 
 SimpleGLShader::SimpleGLShader(std::string fileName, GLuint shaderType)
@@ -13,14 +18,22 @@ SimpleGLShader::~SimpleGLShader()
     glDeleteShader(shaderID);
 }
 
-bool SimpleGLShader::compileFromFile(std::string fileName, GLuint shaderType)
+bool SimpleGLShader::compileFromFile(string fileName, GLuint shaderType)
 {
-	std::ifstream f(fileName);
-	shaderText = std::string((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
-	compileFromText(shaderText, shaderType);
+    //Put text from file into String
+	ifstream file(fileName);
+	if (file) //Make Sure file exists
+    {
+        shaderText = string((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+        compileFromText(shaderText, shaderType);
+    }
+    else //If file doesn't exist then return error
+    {
+        cout << "File " + fileName + " was not found" << endl;
+    }
 }
 
-bool SimpleGLShader::compileFromText(std::string text, GLuint shaderType)
+bool SimpleGLShader::compileFromText(string text, GLuint shaderType)
 {
     //Create Shader Object
     shaderID = glCreateShader(shaderType);
@@ -37,11 +50,11 @@ bool SimpleGLShader::compileFromText(std::string text, GLuint shaderType)
     glGetShaderiv(shaderID, GL_COMPILE_STATUS, &compiled);
     if(!compiled)
     {
-        std::cout << "Shader Compile Failed" << std::endl;
+        cout << "Shader Compile Failed" << endl;
         GLint errorLength = 0;
         glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &errorLength);
         GLchar errorText[errorLength];
         glGetShaderInfoLog(shaderID, errorLength, &errorLength, errorText);
-        std::cout << errorText << std::endl;
+        cout << errorText << endl;
     }
 }
