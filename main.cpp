@@ -16,11 +16,11 @@ int main()
 
     GLfloat verts[] =
     {
-        0  ,   1, //Position
+        0  ,   300, //Position
         0  , 0.5, 1.0, //Color
-        -1 ,  -1, //Position
+        -400 ,-300, //Position
         0  , 1.0, 1.0, //Color
-         1 ,  -1, //Position
+         400 ,-300, //Position
         0  , 1.0, 0.5, //Color
     };
 
@@ -48,6 +48,11 @@ int main()
     program.attachShader(vertShader);
     program.linkProgram();
     program.useProgram();
+
+    float orthoMatrix[] = { 2.0f / (window.width), 2.0f / window.height, 0, 1};
+    GLint orthoMatLocation = glGetUniformLocation(program.programID, "orthoMatrix");
+    glUniform4fv(orthoMatLocation, 1, orthoMatrix);
+
 
     while(window.isOpen())
     {

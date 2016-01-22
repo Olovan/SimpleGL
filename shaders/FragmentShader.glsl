@@ -3,7 +3,7 @@
 in vec3 VertexOutputColors;
 out vec4 FragmentShaderOutputColors;
 
-uniform mat4 orthoMatrix;
+uniform vec4 orthoMatrix;
 
 void main()
 {
