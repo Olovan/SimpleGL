@@ -49,7 +49,7 @@ int main()
     program.linkProgram();
     program.useProgram();
 
-	//Set Orthographic Projection uniform variable
+    //Set Orthographic Projection uniform variable
     float orthoMatrix[] = { 2.0f / (window.width), 2.0f / window.height, 0, 1};
     GLint orthoMatLocation = glGetUniformLocation(program.programID, "orthoMatrix");
     glUniform4fv(orthoMatLocation, 1, orthoMatrix);
