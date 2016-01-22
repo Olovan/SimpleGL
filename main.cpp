@@ -1,11 +1,13 @@
-#include <iostream>
-#include <GL/Glew.h>
-#include <OpenGLWindow.h>
-#include <stdio.h>
-#include <Shader.h>
-#include <SimpleGLProgram.h>
+#include <iostream> //cout, endl;
+#include <GL/Glew.h> //GL functions
+#include <OpenGLWindow.h> //OpenGLWindow
+#include <Shader.h> //SimpleGLShader
+#include <SimpleGLProgram.h> //SimpleGLProgram
 
-using namespace std;
+//using namespace std;
+
+using std::cout;
+using std::endl;
 
 
 int main()
@@ -22,8 +24,11 @@ int main()
         0  , 1.0, 0.5, //Color
     };
 
+    //create Orthographic coord system
     glLoadIdentity();
     glOrtho(0, window.width, 0, window.height, -1, 1);
+
+    //Create Buffer and bind data to it
     GLuint buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
