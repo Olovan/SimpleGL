@@ -32,6 +32,7 @@ bool SimpleGLShader::compileFromText(std::string text, GLuint shaderType)
 
     glCompileShader(shaderID);
 
+    //Check for compile errors
     GLint compiled;
     glGetShaderiv(shaderID, GL_COMPILE_STATUS, &compiled);
     if(!compiled)
