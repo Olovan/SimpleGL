@@ -3,12 +3,13 @@
 #include <OpenGLWindow.h> //OpenGLWindow
 #include <Shader.h> //SimpleGLShader
 #include <SimpleGLProgram.h> //SimpleGLProgram
+#include <glm/glm.hpp> //mat4
+#include <glm/gtc/matrix_transform.hpp> //glm::ortho
 
 //using namespace std;
 
 using std::cout;
 using std::endl;
-
 
 int main()
 {
@@ -16,11 +17,11 @@ int main()
 
     GLfloat verts[] =
     {
-        0  ,   300, //Position
+        400, 600, //Position
         0  , 0.5, 1.0, //Color
-        -400 ,-300, //Position
+        0  ,   0, //Position
         0  , 1.0, 1.0, //Color
-         400 ,-300, //Position
+        800,   0, //Position
         0  , 1.0, 0.5, //Color
     };
 
@@ -50,9 +51,24 @@ int main()
     program.useProgram();
 
     //Set Orthographic Projection uniform variable
-    float orthoMatrix[] = { 2.0f / (window.width), 2.0f / window.height, 0, 1};
+    glm::mat4 orthoMatrix = {
+                                2/800.0f, 0.0f, 0.0f, -1.0f,
+                                0.0f, 2/600.0f, 0.0f, -1.0f,
+                                0.0f, 0.0f, 2.0f, 0.0f,
+                                0.0f, 0.0f, 0.0f, 1.0f
+                            };
+
+    for(int x = 0; x < 4; x++)
+    {
+        for(int y = 0; y < 4; y++)
+        {
+            cout << " " << orthoMatrix[x][y];
+        }
+        cout << endl;
+    }
+
     GLint orthoMatLocation = glGetUniformLocation(program.programID, "orthoMatrix");
-    glUniform4fv(orthoMatLocation, 1, orthoMatrix);
+    glUniformMatrix4fv(orthoMatLocation, 1, GL_FALSE, &orthoMatrix[0][0]);
 
 
     while(window.isOpen())
