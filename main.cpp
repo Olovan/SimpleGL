@@ -3,6 +3,7 @@
 #include <OpenGLWindow.h>
 #include <stdio.h>
 #include <Shader.h>
+#include <SimpleGLProgram.h>
 
 using namespace std;
 
@@ -32,14 +33,16 @@ int main()
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (char *)(sizeof(float) * 2));
 
+    //Create and Compile Shaders
     SimpleGLShader fragShader("../../shaders/FragmentShader.glsl", GL_FRAGMENT_SHADER);
     SimpleGLShader vertShader("../../shaders/VertexShader.glsl", GL_VERTEX_SHADER);
 
-    GLuint shaderProgramID = glCreateProgram();
-    glAttachShader(shaderProgramID, vertShader.shaderID);
-    glAttachShader(shaderProgramID, fragShader.shaderID);
-    glLinkProgram(shaderProgramID);
-    glUseProgram(shaderProgramID);
+    //Link Shaders to Program
+    SimpleGLProgram program;
+    program.attachShader(fragShader);
+    program.attachShader(vertShader);
+    program.linkProgram();
+    program.useProgram();
 
     while(window.isOpen())
     {
@@ -61,8 +64,6 @@ int main()
     }
 
     glDeleteBuffers(1, &buffer);
-
-    glDeleteProgram(shaderProgramID);
 
 
     return 0;
