@@ -61,7 +61,6 @@ int main()
     GLint orthoMatLocation = glGetUniformLocation(program.programID, "orthoMatrix");
     glUniformMatrix4fv(orthoMatLocation, 1, GL_FALSE, &orthoMatrix[0][0]);
 
-
     while(window.isOpen())
     {
         //Clean the Screen and process events

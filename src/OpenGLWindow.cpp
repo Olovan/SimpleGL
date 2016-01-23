@@ -9,6 +9,8 @@ static void error_callback(int error, const char* description)
     std::cout << description << std::endl;
 }
 
+#pragma region Constructors and Destructor
+
 static void create_window(OpenGLWindow* newWindow, unsigned int width, unsigned int height, std::string title)
 {
     //Set Up GLFW
@@ -20,14 +22,23 @@ static void create_window(OpenGLWindow* newWindow, unsigned int width, unsigned 
     newWindow->width = width;
     newWindow->height = height;
 
+    //Initialize Key Array and Button Array
+    for(int i = 0; i < MAX_KEYS; i++)
+        newWindow->m_keys[i] = false;
+    for (int i = 0; i < MAX_MOUSE_BUTTONS; i++)
+        newWindow->m_mouseButtons[i] = false;
+
     //Make the Window
     newWindow->window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 
     //Set GLFWwindow User Pointer so the GLFW window knows who owns it
     glfwSetWindowUserPointer(newWindow->window, newWindow);
 
-    //Set key callback function for the window
+    //Set Callback Functions
     glfwSetKeyCallback(newWindow->window, OpenGLWindow::key_callback);
+    glfwSetCursorPosCallback(newWindow->window, OpenGLWindow::mouse_position_callback);
+    glfwSetMouseButtonCallback(newWindow->window, OpenGLWindow::mouse_buttons_callback);
+
 
     //Set Window as the Current OpenGL context
     glfwMakeContextCurrent(newWindow->window);
@@ -57,12 +68,16 @@ OpenGLWindow::OpenGLWindow(unsigned int x, unsigned int y, std::string title)
     create_window(this, x, y, title);
 }
 
+
+
 OpenGLWindow::~OpenGLWindow()
 {
     //dtor
     glfwDestroyWindow(window);
     glfwTerminate();
 }
+
+#pragma endregion
 
 bool OpenGLWindow::isOpen()
 {
@@ -80,17 +95,68 @@ void OpenGLWindow::update()
     glfwSwapBuffers(window);
 }
 
+//GETTERS AND SETTERS
+
+#pragma region Getters and Setters
+
+bool OpenGLWindow::getKey(unsigned int keycode)
+{
+    if(keycode >= MAX_KEYS) //Make sure it's a valid keycode
+        return false;
+
+    return m_keys[keycode];
+}
+
+bool OpenGLWindow::getMouseButton(unsigned int buttoncode)
+{
+    if(buttoncode >= MAX_MOUSE_BUTTONS)
+        return false;
+
+    return m_mouseButtons[buttoncode];
+}
+
+void OpenGLWindow::getMousePosition(double& X, double& Y)
+{
+    X = m_mousexPos;
+    Y = m_mouseyPos;
+}
+
+#pragma endregion
+
+
+#pragma region Callback Functions
+
+//CALLBACK FUNCTIONS
 void OpenGLWindow::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    if(key > MAX_KEYS)
+    if(key > MAX_KEYS) //Make sure you aren't given an invalid key
         return;
 
-	if(action != GLFW_RELEASE)
+	if(action != GLFW_RELEASE) //Set to true if action is GLFW_PRESS or GLFW_REPEAT
 	{
-		((OpenGLWindow*)glfwGetWindowUserPointer(window))->keys[key] = true;
+		((OpenGLWindow*)glfwGetWindowUserPointer(window))->m_keys[key] = true;
 	}
-	else
+	else //Set to false if action is GLFW_RELEASE
 	{
-		((OpenGLWindow*)glfwGetWindowUserPointer(window))->keys[key] = false;
+		((OpenGLWindow*)glfwGetWindowUserPointer(window))->m_keys[key] = false;
 	}
 }
+
+void OpenGLWindow::mouse_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    ((OpenGLWindow*)glfwGetWindowUserPointer(window))->m_mousexPos = xpos;
+    ((OpenGLWindow*)glfwGetWindowUserPointer(window))->m_mouseyPos = ypos;
+}
+
+void OpenGLWindow::mouse_buttons_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    if(button > MAX_MOUSE_BUTTONS)
+        return;
+
+    if(action != GLFW_RELEASE)
+        ((OpenGLWindow*)glfwGetWindowUserPointer(window))->m_mouseButtons[button] = true;
+    else
+        ((OpenGLWindow*)glfwGetWindowUserPointer(window))->m_mouseButtons[button] = false;
+}
+
+#pragma endregion
