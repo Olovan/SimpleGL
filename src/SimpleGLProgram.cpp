@@ -2,48 +2,93 @@
 #include <Shader.h>
 #include <iostream>
 
-SimpleGLProgram::SimpleGLProgram()
+SimpleGLShaderProgram::SimpleGLShaderProgram()
 {
     //ctor
     programID = glCreateProgram();
 }
 
-SimpleGLProgram::~SimpleGLProgram()
+SimpleGLShaderProgram::SimpleGLShaderProgram(std::string iVertPath, std::string iFragPath)
+    : vertPath(iVertPath.c_str()), fragPath(iFragPath.c_str())
+{
+    programID = glCreateProgram();
+
+    SimpleGLShader vertShader(iVertPath, GL_VERTEX_SHADER);
+    SimpleGLShader fragShader(iFragPath, GL_FRAGMENT_SHADER);
+
+    this->attachShader(vertShader.shaderID);
+    this->attachShader(fragShader.shaderID);
+
+    this->linkProgram();
+    this->validateProgram();
+}
+
+SimpleGLShaderProgram::~SimpleGLShaderProgram()
 {
     //dtor
     glDeleteProgram(programID);
 }
 
-void SimpleGLProgram::attachShader(GLuint shaderID)
+void SimpleGLShaderProgram::attachShader(GLuint shaderID)
 {
     glAttachShader(programID, shaderID);
+
+    GLint shaderType;
+    glGetShaderiv(shaderID, GL_SHADER_TYPE, &shaderType);
+
+    if(shaderType == GL_VERTEX_SHADER)
+        vertShaderID = shaderID;
+
+    if(shaderType == GL_FRAGMENT_SHADER)
+        fragShaderID = shaderID;
 }
 
-void SimpleGLProgram::attachShader(SimpleGLShader shader)
+void SimpleGLShaderProgram::attachShader(SimpleGLShader shader)
 {
-    glAttachShader(programID, shader.shaderID);
+    if(shader.type == GL_VERTEX_SHADER)
+        vertPath = shader.path;
+    else if(shader.type == GL_FRAGMENT_SHADER)
+        fragPath = shader.path;
+    attachShader(shader.shaderID);
 }
 
-void SimpleGLProgram::linkProgram()
+void SimpleGLShaderProgram::linkProgram()
 {
     glLinkProgram(programID);
 
 
     //Check for Link Errors
     GLint compiled;
-    glGetProgramiv(programID, GL_COMPILE_STATUS, &compiled);
-    if(!compiled)
+    glGetProgramiv(programID, GL_LINK_STATUS, &compiled);
+    if(compiled != GL_TRUE)
     {
         std::cout << "Program Link Failed" << std::endl;
         GLint errorLength = 0;
-        glGetShaderiv(programID, GL_INFO_LOG_LENGTH, &errorLength);
+        glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &errorLength);
         GLchar errorText[errorLength];
-        glGetShaderInfoLog(programID, errorLength, &errorLength, errorText);
+        glGetProgramInfoLog(programID, errorLength, &errorLength, errorText);
         std::cout << errorText << std::endl;
     }
 }
 
-void SimpleGLProgram::useProgram()
+void SimpleGLShaderProgram::validateProgram()
+{
+    glValidateProgram(programID);
+
+    GLint compiled;
+    glGetProgramiv(programID, GL_VALIDATE_STATUS, &compiled);
+    if(compiled != GL_TRUE)
+    {
+        std::cout << "Program Validation Failed" << std::endl;
+        GLint errorLength = 0;
+        glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &errorLength);
+        GLchar errorText[errorLength];
+        glGetProgramInfoLog(programID, errorLength, &errorLength, errorText);
+        std::cout << errorText << std::endl;
+    }
+}
+
+void SimpleGLShaderProgram::useProgram()
 {
     glUseProgram(programID);
 }
