@@ -10,6 +10,8 @@ using std::istreambuf_iterator;
 
 SimpleGLShader::SimpleGLShader(std::string fileName, GLuint shaderType)
 {
+    type = shaderType;
+    path = fileName.c_str();
     compileFromFile(fileName, shaderType);
 }
 
