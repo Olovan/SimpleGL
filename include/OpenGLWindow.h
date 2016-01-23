@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
+#define MAX_KEYS 1024
 
 class OpenGLWindow
 {
@@ -16,10 +17,13 @@ class OpenGLWindow
         GLFWwindow* window;
         int width;
         int height;
+        bool keys[MAX_KEYS];
 
         bool isOpen();
         void updateSize();
         void update();
+
+        static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
     protected:
     private:

@@ -9,13 +9,6 @@ static void error_callback(int error, const char* description)
     std::cout << description << std::endl;
 }
 
-static void key_callback(GLFWwindow* window, int key, int keycode, int action, int mods)
-{
-    if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
-}
-
-
 static void create_window(OpenGLWindow* newWindow, unsigned int width, unsigned int height, std::string title)
 {
     //Set Up GLFW
@@ -30,6 +23,12 @@ static void create_window(OpenGLWindow* newWindow, unsigned int width, unsigned 
     //Make the Window
     newWindow->window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 
+    //Set GLFWwindow User Pointer so the GLFW window knows who owns it
+    glfwSetWindowUserPointer(newWindow->window, newWindow);
+
+    //Set key callback function for the window
+    glfwSetKeyCallback(newWindow->window, OpenGLWindow::key_callback);
+
     //Set Window as the Current OpenGL context
     glfwMakeContextCurrent(newWindow->window);
 
@@ -37,14 +36,12 @@ static void create_window(OpenGLWindow* newWindow, unsigned int width, unsigned 
     glewExperimental = GL_TRUE;
     if(glewInit() != GLEW_OK)
     {
-        std::cout << "GLEW FAILED TO INIT" << std::endl;
+        std::cout << "GLEW FAILED TO INIT!" << std::endl;
         exit(EXIT_FAILURE);
     }
 
     //Set up double buffering
     glfwSwapInterval(1);
-
-    glfwSetKeyCallback(newWindow->window, key_callback);
     glViewport(0, 0, width, height);
 }
 
@@ -81,4 +78,19 @@ void OpenGLWindow::update()
 {
     glfwPollEvents();
     glfwSwapBuffers(window);
+}
+
+void OpenGLWindow::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if(key > MAX_KEYS)
+        return;
+
+	if(action != GLFW_RELEASE)
+	{
+		((OpenGLWindow*)glfwGetWindowUserPointer(window))->keys[key] = true;
+	}
+	else
+	{
+		((OpenGLWindow*)glfwGetWindowUserPointer(window))->keys[key] = false;
+	}
 }
