@@ -15,8 +15,10 @@ class SimpleGLShader
 	    ~SimpleGLShader();
         bool compileFromFile(std::string fileName, GLuint shaderType);
         bool compileFromText(std::string text, GLuint shaderType);
-        GLuint shaderID;
 
+        GLuint shaderID;
+        GLint type;
+        const char* path;
 
 	private:
         std::string shaderText;
