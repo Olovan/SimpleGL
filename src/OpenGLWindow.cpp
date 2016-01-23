@@ -76,3 +76,9 @@ void OpenGLWindow::updateSize()
 {
     glfwGetFramebufferSize(window, &width, &height);
 }
+
+void OpenGLWindow::update()
+{
+    glfwPollEvents();
+    glfwSwapBuffers(window);
+}

@@ -19,6 +19,7 @@ class OpenGLWindow
 
         bool isOpen();
         void updateSize();
+        void update();
 
     protected:
     private:
