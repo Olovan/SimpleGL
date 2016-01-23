@@ -1,7 +1,7 @@
 #version 330
 
-in layout(location = 0) vec2 position;
-in layout(location = 1) vec3 inputColors;
+layout(location = 0) in vec2 position;
+layout(location = 1) in vec3 inputColors;
 out vec3 VertexOutputColors;
 
 uniform mat4 orthoMatrix;
