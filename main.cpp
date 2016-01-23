@@ -18,11 +18,11 @@ int main()
     GLfloat verts[] =
     {
         400, 600, //Position
-        0  , 0.5, 1.0, //Color
+        1.0  , 0.0, 0.0, //Color
         0  ,   0, //Position
-        0  , 1.0, 1.0, //Color
+        0  , 1.0, 0.0, //Color
         800,   0, //Position
-        0  , 1.0, 0.5, //Color
+        0  , 0.0, 1.0, //Color
     };
 
     //create Orthographic coord system
@@ -39,24 +39,11 @@ int main()
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (char *)(sizeof(float) * 2));
 
-    //Create and Compile Shaders
-    SimpleGLShader fragShader("../../shaders/FragmentShader.glsl", GL_FRAGMENT_SHADER);
-    SimpleGLShader vertShader("../../shaders/VertexShader.glsl", GL_VERTEX_SHADER);
-
-    //Link Shaders to Program
-    SimpleGLProgram program;
-    program.attachShader(fragShader);
-    program.attachShader(vertShader);
-    program.linkProgram();
+    SimpleGLShaderProgram program("../../Shaders/VertexShader.glsl", "../../shaders/FragmentShader.glsl");
     program.useProgram();
 
     //Set Orthographic Projection uniform variable
-    glm::mat4 orthoMatrix = {
-                                2/800.0f, 0.0f, 0.0f, -1.0f,
-                                0.0f, 2/600.0f, 0.0f, -1.0f,
-                                0.0f, 0.0f, 2.0f, 0.0f,
-                                0.0f, 0.0f, 0.0f, 1.0f
-                            };
+    glm::mat4 orthoMatrix = glm::ortho((float)0.0f, (float)800.0f, (float)0.0f, (float)600.0f, (float)-1.0f, (float)1.0f);
 
     GLint orthoMatLocation = glGetUniformLocation(program.programID, "orthoMatrix");
     glUniformMatrix4fv(orthoMatLocation, 1, GL_FALSE, &orthoMatrix[0][0]);

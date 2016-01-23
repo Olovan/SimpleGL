@@ -10,6 +10,6 @@ void main()
 {
 	VertexOutputColors = inputColors;
 	vec4 positionVec4 = vec4(position, 0, 1);
-	gl_Position = positionVec4 * orthoMatrix;
+	gl_Position = orthoMatrix * positionVec4;
 
 }
