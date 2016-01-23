@@ -58,15 +58,6 @@ int main()
                                 0.0f, 0.0f, 0.0f, 1.0f
                             };
 
-    for(int x = 0; x < 4; x++)
-    {
-        for(int y = 0; y < 4; y++)
-        {
-            cout << " " << orthoMatrix[x][y];
-        }
-        cout << endl;
-    }
-
     GLint orthoMatLocation = glGetUniformLocation(program.programID, "orthoMatrix");
     glUniformMatrix4fv(orthoMatLocation, 1, GL_FALSE, &orthoMatrix[0][0]);
 
@@ -85,9 +76,8 @@ int main()
         //Draw stuff
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        //Swap Buffers
-        glfwSwapBuffers(window.window);
-        glfwPollEvents();
+        //Display what we have drawn
+        window.update();
     }
 
     glDeleteBuffers(1, &buffer);
