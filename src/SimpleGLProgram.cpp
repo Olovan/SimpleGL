@@ -88,7 +88,38 @@ void SimpleGLShaderProgram::validateProgram()
     }
 }
 
+GLint SimpleGLShaderProgram::getUniformLocation(const char* name)
+{
+    return glGetUniformLocation(programID, name);
+}
+
 void SimpleGLShaderProgram::useProgram()
 {
     glUseProgram(programID);
+}
+
+
+void SimpleGLShaderProgram::setUniform1f(const char* name, float value)
+{
+    glUniform1f(getUniformLocation(name), value);
+}
+void SimpleGLShaderProgram::setUniform1i(const char* name, int value)
+{
+    glUniform1i(getUniformLocation(name), value);
+}
+void SimpleGLShaderProgram::setUniform2f(const char* name, glm::vec2& value)
+{
+    glUniform2f(getUniformLocation(name), value[0], value[1]);
+}
+void SimpleGLShaderProgram::setUniform3f(const char* name, glm::vec3& value)
+{
+    glUniform3f(getUniformLocation(name), value[0], value[1], value[2]);
+}
+void SimpleGLShaderProgram::setUniform4f(const char* name, glm::vec4& value)
+{
+    glUniform4f(getUniformLocation(name), value[0], value[1], value[2], value[3]);
+}
+void SimpleGLShaderProgram::setUniformMat4f(const char* name, glm::mat4& value)
+{
+    glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &value[0][0]);
 }
