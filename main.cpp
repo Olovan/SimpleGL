@@ -5,6 +5,7 @@
 #include <SimpleGLProgram.h> //SimpleGLProgram
 #include <glm/glm.hpp> //mat4
 #include <glm/gtc/matrix_transform.hpp> //glm::ortho
+#include <glm/gtx/rotate_vector.hpp> //glm::rotate
 
 //using namespace std;
 
@@ -17,12 +18,14 @@ int main()
 
     GLfloat verts[] =
     {
-        400, 600, //Position
+       -300, 300, //Position
         1.0  , 0.0, 0.0, //Color
-        0  ,   0, //Position
+       -300,-300, //Position
         0  , 1.0, 0.0, //Color
-        800,   0, //Position
+        300,-300, //Position
         0  , 0.0, 1.0, //Color
+        300, 300, //Position
+        1  ,   1,   1,
     };
 
     //create Orthographic coord system
@@ -43,10 +46,17 @@ int main()
     program.useProgram();
 
     //Set Orthographic Projection uniform variable
-    glm::mat4 orthoMatrix = glm::ortho((float)0.0f, (float)800.0f, (float)0.0f, (float)600.0f, (float)-1.0f, (float)1.0f);
+    float degreeToRad = 3.1415/180.0f;
 
-    GLint orthoMatLocation = glGetUniformLocation(program.programID, "orthoMatrix");
-    glUniformMatrix4fv(orthoMatLocation, 1, GL_FALSE, &orthoMatrix[0][0]);
+    glm::mat4 orthoMatrix = glm::ortho((float)0.0f, (float)800.0f, (float)0.0f, (float)600.0f, (float)-1.0f, (float)1.0f);
+    glm::mat4 viewMatrix = glm::mat4(1.0f);
+    glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(400, 300, 0));
+    modelMatrix = glm::rotate(modelMatrix, 20 * degreeToRad, glm::vec3(0, 0, 1));
+
+
+    program.setUniformMat4f("projectionMatrix", orthoMatrix);
+    program.setUniformMat4f("viewMatrix", viewMatrix);
+    program.setUniformMat4f("modelMatrix", modelMatrix);
 
     while(window.isOpen())
     {
@@ -60,10 +70,13 @@ int main()
         glOrtho(0, window.width, 0, window.height, -1, 1);
 
         //Draw stuff
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_QUADS, 0, 4);
 
         //Display what we have drawn
         window.update();
+
+        modelMatrix = glm::rotate(modelMatrix, 1 * degreeToRad, glm::vec3(0, 0, 1));
+        program.setUniformMat4f("modelMatrix", modelMatrix);
     }
 
     glDeleteBuffers(1, &buffer);
