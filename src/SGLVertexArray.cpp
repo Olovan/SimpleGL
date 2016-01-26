@@ -9,9 +9,14 @@ SGLVertexArray::SGLVertexArray()
 SGLVertexArray::~SGLVertexArray()
 {
     //clean up buffers
+    deleteBuffers();
+    glDeleteVertexArrays(1, &ID);
+}
+
+void SGLVertexArray::deleteBuffers()
+{
     for (int i = 0; i < buffers.size(); i++)
         delete buffers[i];
-    glDeleteVertexArrays(1, &ID);
 }
 
 void SGLVertexArray::addBuffer(SGLBuffer* buffer, GLuint index)
