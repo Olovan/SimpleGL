@@ -54,6 +54,9 @@ static void create_window(OpenGLWindow* newWindow, unsigned int width, unsigned 
     //Set up double buffering
     glfwSwapInterval(1);
     glViewport(0, 0, width, height);
+
+    //Enable Depth Buffer
+    glEnable(GL_DEPTH_TEST);
 }
 
 //Default makes 800x600 blank window with not title
