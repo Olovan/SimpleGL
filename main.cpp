@@ -8,6 +8,7 @@
 #include <glm/glm.hpp> //mat4
 #include <glm/gtc/matrix_transform.hpp> //glm::ortho
 #include <glm/gtx/rotate_vector.hpp> //glm::rotate
+#include <SGLBoxRenderable2D.h>
 
 //using namespace std;
 
@@ -18,12 +19,14 @@ int main()
 {
     OpenGLWindow window;
 
+#if 0
+
     GLfloat verts[] =
     {
-       -300, 300, //Position
-       -300,-300, //Position
-        300,-300, //Position
-        300, 300, //Position
+       -300, 300, 0, //Position
+       -300,-300, 0, //Position
+        300,-300, 0, //Position
+        300, 300, 0, //Position
     };
 
     GLfloat colors[] =
@@ -38,7 +41,6 @@ int main()
     glLoadIdentity();
     glOrtho(0, window.width, 0, window.height, -1, 1);
 
-#if 0
     //Create Buffer and bind data to it
     GLuint vertexBuffer;
     GLuint colorBuffer;
@@ -56,35 +58,47 @@ int main()
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-#endif // 0
+
 
     SGLVertexArray* vertArray = new SGLVertexArray();
-    vertArray->addBuffer(new SGLBuffer(verts, sizeof(verts), 2), 0);
+    vertArray->addBuffer(new SGLBuffer(verts, sizeof(verts), 3), 0);
     vertArray->addBuffer(new SGLBuffer(colors, sizeof(colors), 3), 1);
     vertArray->bind();
 
 
-
+#endif // 0
     SimpleGLShaderProgram program("../../Shaders/VertexShader.glsl", "../../shaders/FragmentShader.glsl");
     program.useProgram();
 
     //Set Orthographic Projection uniform variable
     float degreeToRad = 3.1415/180.0f;
 
-    glm::mat4 orthoMatrix = glm::ortho((float)0.0f, (float)800.0f, (float)0.0f, (float)600.0f, (float)-1.0f, (float)1.0f);
-    glm::mat4 viewMatrix = glm::mat4(1.0f);
-    glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(400, 300, 0));
-    modelMatrix = glm::rotate(modelMatrix, 20 * degreeToRad, glm::vec3(0, 0, 1));
+    glm::mat4 orthoMatrix = glm::ortho((float)0.0f, (float)800.0f, (float)0.0f, (float)600.0f);
+//    glm::mat4 viewMatrix = glm::mat4(1.0f);
+//    glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(400, 300, 0));
+//    modelMatrix = glm::rotate(modelMatrix, 20 * degreeToRad, glm::vec3(0, 0, 1));
 
 
     program.setUniformMat4f("projectionMatrix", orthoMatrix);
-    program.setUniformMat4f("viewMatrix", viewMatrix);
-    program.setUniformMat4f("modelMatrix", modelMatrix);
+//    program.setUniformMat4f("viewMatrix", viewMatrix);
+//    program.setUniformMat4f("modelMatrix", modelMatrix);
+
+
+    SGLBoxRenderable2D testBox(glm::vec3(400, 300, 1.0), glm::vec2(50,50), glm::vec3(1, 0, 0), &program);
+    SGLBoxRenderable2D testBox2(glm::vec3(100, 300, 0.5), glm::vec2(50,50), glm::vec3(0, 0, 1), &program);
+    SGLBoxRenderable2D testBox3(glm::vec3(300, 200, 1.0), glm::vec2(50,50), glm::vec3(1, 1, 0), &program);
+
+    SGLBoxRenderable2D bigBox (glm::vec3(400, 300, 0), glm::vec2(600, 600), glm::vec3(1, 1, 1), &program);
+    bigBox.vertexColors[0] = glm::vec3(1, 0, 0);
+    bigBox.vertexColors[2] = glm::vec3(0, 1, 0);
+    bigBox.vertexColors[3] = glm::vec3(0, 0, 1);
+    bigBox.setOrigin(glm::vec3(300, 300, 0));
+    bigBox.resetVertexArray(); //load updated data into vertex array
 
     while(window.isOpen())
     {
         //Clean the Screen and process events
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         //Handle Window Resizing
         window.updateSize();
@@ -92,15 +106,26 @@ int main()
         glLoadIdentity();
         glOrtho(0, window.width, 0, window.height, -1, 1);
 
+        //rotate
+        bigBox.rotate(1);
+
         //Draw stuff
-        glDrawArrays(GL_QUADS, 0, 4);
+        testBox.draw();
+        testBox2.draw();
+        testBox3.draw();
+        bigBox.draw();
+
+//        vertArray->bind();
+//        modelMatrix = glm::rotate(modelMatrix, 1 * degreeToRad, glm::vec3(0, 0, 1));
+//        program.setUniformMat4f("modelMatrix", modelMatrix);
+//        glDrawArrays(GL_QUADS, 0, 4);
+
+
 
         //Display what we have drawn
         window.update();
 
-        modelMatrix = glm::rotate(modelMatrix, 1 * degreeToRad, glm::vec3(0, 0, 1));
-        program.setUniformMat4f("modelMatrix", modelMatrix);
-
+        //Check for OpenGL Error Codes
         GLenum error;
         error = glGetError();
         if(error != GL_NO_ERROR)
@@ -108,7 +133,7 @@ int main()
     }
 
 
-    delete vertArray;
+//    delete vertArray;
 
     return 0;
 }
