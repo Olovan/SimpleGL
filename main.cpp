@@ -60,11 +60,11 @@ int main()
 #endif // BATCHBUFFER
 
 #ifdef BATCHBUFFER
-    Vertex vertices[4 * NUMBER_OF_BOXES];
+    Vertex* vertices = new Vertex[4 * NUMBER_OF_BOXES];
     for(int i = 0; i < NUMBER_OF_BOXES; i++)
     {
-        GLint xPos = rand() % 800;
-        GLint yPos = rand() % 600;
+        GLint xPos = rand() % 700 + 50;
+        GLint yPos = rand() % 500 + 50;
         vertices[4*i] = (Vertex({.position = glm::vec3(xPos, yPos, 0.2), .color = glm::vec3(1, 1, 1)}));
         vertices[4*i + 1] = (Vertex({.position = glm::vec3(xPos + BOX_SIZE, yPos, 0.2), .color = glm::vec3(1, 1, 1)}));
         vertices[4*i + 2] = (Vertex({.position = glm::vec3(xPos + BOX_SIZE, yPos + BOX_SIZE, 0.2), .color = glm::vec3(1, 1, 1)}));
@@ -76,7 +76,7 @@ int main()
     GLuint bigBuffer;
     glGenBuffers(1, &bigBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, bigBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * NUMBER_OF_BOXES * 4, &vertices[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
@@ -96,17 +96,23 @@ int main()
     bigBox.setOrigin(glm::vec3(300, 300, 0));
     bigBox.resetVertexArray(); //load updated data into vertex array
 
+    double lastFrameTime = 0;
+    double deltaFrameTime = 0;
+
     while(window.isOpen())
     {
         //Clean the Screen and process events
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        deltaFrameTime = glfwGetTime() - lastFrameTime;
+        lastFrameTime = glfwGetTime();
 
         //Handle Window Resizing
         window.updateSize();
         glViewport(0, 0, window.width, window.height);
 
         //rotate
-        bigBox.rotate(1);
+        bigBox.rotate(30 * deltaFrameTime);
 
         //Draw stuff
         testBox.draw();
@@ -154,7 +160,11 @@ int main()
         delete boxes[i];
     }
 #endif // BATCHBUFFER
+#ifdef BATCHBUFFER
 
+        delete[] vertices;
+
+#endif // BATCHBUFFER
 //    delete vertArray;
 
     return 0;
