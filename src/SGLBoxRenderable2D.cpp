@@ -2,6 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
+#include <cstring>
 
 float radsToDegrees = 180/3.1415;
 float degreesToRads = 3.1415/180;
@@ -17,6 +18,7 @@ SGLBoxRenderable2D::SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::
     setColor(color);
 
     setPosition(position);
+    elementArrayBuffer.addData( elementArray, sizeof(elementArray));
 
     vertexArray.addBuffer(new SGLBuffer((float*)vertexPositions, sizeof(vertexPositions), 3), 0);
     vertexArray.addBuffer(new SGLBuffer((float*)vertexColors, sizeof(vertexColors), 3), 1);
@@ -31,7 +33,10 @@ void SGLBoxRenderable2D::draw()
 {
     program->setUniformMat4f("modelMatrix", modelMatrix);
     vertexArray.bind();
-    glDrawArrays(GL_QUADS, 0, 4);
+    elementArrayBuffer.bind();
+    glDrawElements(GL_TRIANGLES, elementArrayBuffer.size, GL_UNSIGNED_SHORT, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 void SGLBoxRenderable2D::setSize(glm::vec2 size)

@@ -4,6 +4,7 @@
 #include <SGLRenderable.h>
 #include <glm/glm.hpp>
 #include <SGLVertexArray.h>
+#include <SGLElementArray.h>
 #include <SimpleGLProgram.h>
 
 
@@ -21,8 +22,10 @@ class SGLBoxRenderable2D : public SGLRenderable
 
         glm::vec3 vertexPositions[4];
         glm::vec3 vertexColors[4];
+        GLushort elementArray[6] = { 0, 2, 1,   2, 0, 3};
 
         SGLVertexArray vertexArray;
+        SGLElementArray elementArrayBuffer;
 
         void draw() override;
         void setSize(glm::vec2 size);

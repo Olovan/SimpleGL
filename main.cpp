@@ -130,6 +130,8 @@ int main()
         error = glGetError();
         if(error != GL_NO_ERROR)
             cout << "GL Error: " << error << endl;
+
+
     }
 
 
