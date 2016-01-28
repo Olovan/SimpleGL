@@ -10,10 +10,11 @@
 #include <glm/gtx/rotate_vector.hpp> //glm::rotate
 #include <SGLBoxRenderable2D.h>
 
-//using namespace std;
-
 using std::cout;
 using std::endl;
+
+float lastReportOfFramerate = 0;
+unsigned int framesThisSecond = 0;
 
 int main()
 {
@@ -132,6 +133,14 @@ int main()
             cout << "GL Error: " << error << endl;
 
 
+        //Report FrameRate
+        framesThisSecond++;
+        if(glfwGetTime() - lastReportOfFramerate > 1)
+        {
+            cout << framesThisSecond / (glfwGetTime() - lastReportOfFramerate) << " Frames Per Second" << endl;
+            framesThisSecond = 0;
+            lastReportOfFramerate = (float)glfwGetTime();
+        }
     }
 
 
