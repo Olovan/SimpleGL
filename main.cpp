@@ -30,6 +30,8 @@ int main()
 
     OpenGLWindow window;
     glfwSwapInterval(0);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     SimpleGLShaderProgram shader("../../Shaders/VertexShader.glsl", "../../shaders/FragmentShader.glsl");
     shader.useProgram();
