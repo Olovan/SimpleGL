@@ -11,7 +11,7 @@ SGLBuffer::SGLBuffer()
 SGLBuffer::~SGLBuffer()
 {
     //dtor
-    glDeleteBuffers(1, &bufferID);
+//    glDeleteBuffers(1, &bufferID);
 }
 
 SGLBuffer::SGLBuffer(float data[], GLuint size, GLuint count)

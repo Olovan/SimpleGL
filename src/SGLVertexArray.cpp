@@ -15,8 +15,9 @@ SGLVertexArray::~SGLVertexArray()
 
 void SGLVertexArray::deleteBuffers()
 {
-    for (int i = 0; i < buffers.size(); i++)
-        delete buffers[i];
+    for (SGLBuffer* buffer : buffers)
+        delete buffer;
+    buffers.clear();
 }
 
 void SGLVertexArray::addBuffer(SGLBuffer* buffer, GLuint index)

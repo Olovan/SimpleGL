@@ -44,11 +44,11 @@ int main()
     shader.setUniformMat4f("projectionMatrix", orthoMatrix);
 
 
-    SGLBoxRenderable2D testBox(glm::vec3(400, 300, 1.0), glm::vec2(50,50), glm::vec3(1, 0, 0), &shader);
-    SGLBoxRenderable2D testBox2(glm::vec3(100, 300, 0.5), glm::vec2(50,50), glm::vec3(0, 0, 1), &shader);
-    SGLBoxRenderable2D testBox3(glm::vec3(300, 200, 1.0), glm::vec2(50,50), glm::vec3(1, 1, 0), &shader);
-
-
+//    SGLBoxRenderable2D testBox(glm::vec3(400, 300, 1.0), glm::vec2(50,50), glm::vec3(1, 0, 0), &shader);
+//    SGLBoxRenderable2D testBox2(glm::vec3(100, 300, 0.5), glm::vec2(50,50), glm::vec3(0, 0, 1), &shader);
+//    SGLBoxRenderable2D testBox3(glm::vec3(300, 200, 1.0), glm::vec2(50,50), glm::vec3(1, 1, 0), &shader);
+//
+//
     SGLBoxRenderable2D bigBox (glm::vec3(400, 300, 0), glm::vec2(600, 600), glm::vec3(1, 1, 1), &shader);
     bigBox.vertexColors[0] = glm::vec3(1, 0, 0);
     bigBox.vertexColors[2] = glm::vec3(0, 1, 0);
@@ -57,7 +57,7 @@ int main()
     bigBox.resetVertexArray(); //load updated data into vertex array
 
 
-    testBox.setTexture("../../images/Spaceman.png");
+    bigBox.setTexture("../../images/Spaceman.png");
 
 
     double lastFrameTime = 0;
@@ -75,14 +75,14 @@ int main()
         window.updateSize();
         glViewport(0, 0, window.width, window.height);
 
-        //rotate
+//        //rotate
         bigBox.rotate(30 * deltaFrameTime);
-
-        //Draw stuff
-        testBox2.draw();
-        testBox3.draw();
+//
+//        //Draw stuff
+//        testBox2.draw();
+//        testBox3.draw();
         bigBox.draw();
-        testBox.draw();
+//        testBox.draw();
 
         //Display what we have drawn
         window.update();
