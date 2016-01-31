@@ -11,7 +11,10 @@ void main()
 {
 	if(useTexture != 0)
 	{
-		FragmentShaderOutputColors = texture(textureSampler, VertexOutputTexCoords);
+		vec4 color = texture(textureSampler, VertexOutputTexCoords);
+		if(color.a < 0.1)
+			discard;
+		FragmentShaderOutputColors = color;
 	}
 	else
 	{

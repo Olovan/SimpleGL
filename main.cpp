@@ -44,8 +44,8 @@ int main()
     shader.setUniformMat4f("projectionMatrix", orthoMatrix);
 
 
-//    SGLBoxRenderable2D testBox(glm::vec3(400, 300, 1.0), glm::vec2(50,50), glm::vec3(1, 0, 0), &shader);
-//    SGLBoxRenderable2D testBox2(glm::vec3(100, 300, 0.5), glm::vec2(50,50), glm::vec3(0, 0, 1), &shader);
+    SGLBoxRenderable2D testBox(glm::vec3(400, 300, 1.0), glm::vec2(50,50), glm::vec3(1, 0, 0), &shader);
+    SGLBoxRenderable2D testBox2(glm::vec3(100, 300, 0.5), glm::vec2(50,50), glm::vec3(0, 0, 1), &shader);
 //    SGLBoxRenderable2D testBox3(glm::vec3(300, 200, 1.0), glm::vec2(50,50), glm::vec3(1, 1, 0), &shader);
 //
 //
@@ -58,6 +58,8 @@ int main()
 
 
     bigBox.setTexture("../../images/Spaceman.png");
+    testBox.setTexture("../../images/Spaceman.png");
+    testBox2.setTexture("../../IMAGES/Spaceman.png");
 
 
     double lastFrameTime = 0;
@@ -79,10 +81,10 @@ int main()
         bigBox.rotate(30 * deltaFrameTime);
 //
 //        //Draw stuff
-//        testBox2.draw();
+        testBox2.draw();
 //        testBox3.draw();
         bigBox.draw();
-//        testBox.draw();
+        testBox.draw();
 
         //Display what we have drawn
         window.update();
