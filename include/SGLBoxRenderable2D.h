@@ -19,9 +19,11 @@ class SGLBoxRenderable2D : public SGLRenderable
         SimpleGLShaderProgram* program;
         glm::mat4 modelMatrix;
         glm::vec3 origin; //Used to determine rotation and position
+        GLuint texID = 0;
 
         glm::vec3 vertexPositions[4];
         glm::vec3 vertexColors[4];
+        glm::vec2 texCoords[4];
         GLushort elementArray[6] = { 0, 2, 1,   2, 0, 3};
 
         SGLVertexArray vertexArray;
@@ -33,6 +35,8 @@ class SGLBoxRenderable2D : public SGLRenderable
         void setPosition(glm::vec3 position);
         void setRotation(float degrees, const glm::vec3& axis);
         void setOrigin(glm::vec3 origin);
+        void setTexture(std::string pathToTexture);
+        void setTexCoords();
         void move(glm::vec3 movement);
         void rotate(float degrees, const glm::vec3& axis);
         void rotate(float degrees);

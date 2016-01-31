@@ -3,10 +3,24 @@
 
 #include <iostream>
 #include <cstring>
+#include <stb_image.h>
+
+using std::cout;
+using std::endl;
+
+using glm::vec2;
+using glm::vec3;
 
 float radsToDegrees = 180/3.1415;
 float degreesToRads = 3.1415/180;
 
+void SGLBoxRenderable2D::setTexCoords()
+{
+    texCoords[0] = vec2(0, 0);
+    texCoords[1] = vec2(1, 0);
+    texCoords[2] = vec2(1, 1);
+    texCoords[3] = vec2(0, 1);
+}
 
 
 SGLBoxRenderable2D::SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::vec3 color, SimpleGLShaderProgram* program)
@@ -14,14 +28,15 @@ SGLBoxRenderable2D::SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::
 {
     //ctor
     setSize(size);
-
     setColor(color);
+    setTexCoords();
 
     setPosition(position);
-    elementArrayBuffer.addData( elementArray, sizeof(elementArray));
+    elementArrayBuffer.setData( elementArray, sizeof(elementArray));
 
     vertexArray.addBuffer(new SGLBuffer((float*)vertexPositions, sizeof(vertexPositions), 3), 0);
     vertexArray.addBuffer(new SGLBuffer((float*)vertexColors, sizeof(vertexColors), 3), 1);
+    vertexArray.addBuffer(new SGLBuffer((float*)texCoords, sizeof(texCoords), 2), 2);
 }
 
 SGLBoxRenderable2D::~SGLBoxRenderable2D()
@@ -34,7 +49,9 @@ void SGLBoxRenderable2D::draw()
     program->setUniformMat4f("modelMatrix", modelMatrix);
     vertexArray.bind();
     elementArrayBuffer.bind();
+    glBindTexture(GL_TEXTURE_2D, texID);
     glDrawElements(GL_TRIANGLES, elementArrayBuffer.size, GL_UNSIGNED_SHORT, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
@@ -68,6 +85,31 @@ void SGLBoxRenderable2D::setRotation(float degrees, const glm::vec3& axis)
     move(position);
     rotate(degrees, axis);
 }
+
+void SGLBoxRenderable2D::setTexture(std::string pathToTexture)
+{
+    //Load Image data
+    int width, height, bpp;
+    unsigned char * imageData = stbi_load(pathToTexture.c_str(), &width, &height, &bpp, 4); // 4 = RGBA   bpp = bytes per pixel
+    if(imageData == nullptr) //Make sure image could be loaded before continuing
+    {
+        cout << "Texture data could not be loaded by stb_load" << endl;
+        return;
+    }
+    //Create and Bind Texture
+    GLuint texID;
+    glGenTextures(1, &texID);
+    this->texID = texID;
+    glBindTexture(GL_TEXTURE_2D, texID);
+    //Set Texture settings
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    //Load Image data into Texture
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+
+
+}
+
 
 void SGLBoxRenderable2D::move(glm::vec3 movement)
 {
