@@ -9,6 +9,6 @@ uniform sampler2D textureSampler;
 void main()
 {
 	
-	FragmentShaderOutputColors = texture(textureSampler, VertexOutputTexCoords).rgba;
+	FragmentShaderOutputColors = texture(textureSampler, VertexOutputTexCoords);
 	
 }

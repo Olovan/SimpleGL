@@ -42,6 +42,7 @@ SGLBoxRenderable2D::SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::
 SGLBoxRenderable2D::~SGLBoxRenderable2D()
 {
     //dtor
+    glDeleteTextures(1, &texID);
 }
 
 void SGLBoxRenderable2D::draw()
@@ -106,8 +107,6 @@ void SGLBoxRenderable2D::setTexture(std::string pathToTexture)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     //Load Image data into Texture
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-
-
 }
 
 
@@ -139,4 +138,5 @@ void SGLBoxRenderable2D::resetVertexArray()
     vertexArray.deleteBuffers();
     vertexArray.addBuffer(new SGLBuffer((float*)vertexPositions, sizeof(vertexPositions), 3), 0);
     vertexArray.addBuffer(new SGLBuffer((float*)vertexColors, sizeof(vertexColors), 3), 1);
+    vertexArray.addBuffer(new SGLBuffer((float*)texCoords, sizeof(texCoords), 2), 2);
 }
