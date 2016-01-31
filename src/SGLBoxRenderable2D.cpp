@@ -49,6 +49,7 @@ void SGLBoxRenderable2D::draw()
     vertexArray.bind();
     elementArrayBuffer.bind();
     texture.bind();
+    program->setUniform1i("useTexture", useTexture);
     glDrawElements(GL_TRIANGLES, elementArrayBuffer.size, GL_UNSIGNED_SHORT, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -87,7 +88,8 @@ void SGLBoxRenderable2D::setRotation(float degrees, const glm::vec3& axis)
 
 void SGLBoxRenderable2D::setTexture(std::string pathToTexture)
 {
-    texture.loadFromFile(pathToTexture);
+    if(texture.loadFromFile(pathToTexture))
+        useTexture = 1;
 }
 
 

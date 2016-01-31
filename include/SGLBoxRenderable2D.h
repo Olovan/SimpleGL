@@ -19,6 +19,7 @@ class SGLBoxRenderable2D : public SGLRenderable
 
         glm::vec3 position;
         glm::vec2 size;
+        int useTexture = 0;
         SimpleGLShaderProgram* program;
         glm::mat4 modelMatrix;
         glm::vec3 origin; //Used to determine rotation and position
