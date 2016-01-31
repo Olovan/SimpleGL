@@ -79,10 +79,10 @@ int main()
         bigBox.rotate(30 * deltaFrameTime);
 
         //Draw stuff
-        testBox.draw();
         testBox2.draw();
         testBox3.draw();
         bigBox.draw();
+        testBox.draw();
 
         //Display what we have drawn
         window.update();
