@@ -6,7 +6,10 @@
 #include <SGLVertexArray.h>
 #include <SGLElementArray.h>
 #include <SimpleGLProgram.h>
+#include <SGLTexture2D.h>
 
+using glm::vec2;
+using glm::vec3;
 
 class SGLBoxRenderable2D : public SGLRenderable
 {
@@ -19,11 +22,11 @@ class SGLBoxRenderable2D : public SGLRenderable
         SimpleGLShaderProgram* program;
         glm::mat4 modelMatrix;
         glm::vec3 origin; //Used to determine rotation and position
-        GLuint texID = 0;
+        SGLTexture2D texture;
 
         glm::vec3 vertexPositions[4];
         glm::vec3 vertexColors[4];
-        glm::vec2 texCoords[4];
+        glm::vec2 texCoords[4] = { vec2(0,0), vec2(1,0), vec2(1,1), vec2(0,1)};
         GLushort elementArray[6] = { 0, 2, 1,   2, 0, 3};
 
         SGLVertexArray vertexArray;
