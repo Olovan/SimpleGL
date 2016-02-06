@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <SGLTexture2D.h>
-#include <SimpleGLProgram.h>
+#include <SGLProgram.h>
 
 
 using glm::vec3;
