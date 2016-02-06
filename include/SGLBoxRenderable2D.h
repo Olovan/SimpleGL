@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <SGLVertexArray.h>
 #include <SGLElementArray.h>
-#include <SimpleGLProgram.h>
+#include <SGLProgram.h>
 #include <SGLTexture2D.h>
 
 using glm::vec2;
@@ -14,13 +14,13 @@ using glm::vec3;
 class SGLBoxRenderable2D : public SGLRenderable
 {
     public:
-        SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::vec3 color, SimpleGLShaderProgram* program);
+        SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::vec3 color, SGLShaderProgram* program);
         virtual ~SGLBoxRenderable2D();
 
         glm::vec3 position;
         glm::vec2 size;
         int useTexture = 0;
-        SimpleGLShaderProgram* program;
+        SGLShaderProgram* program;
         glm::mat4 modelMatrix;
         glm::vec3 origin; //Used to determine rotation and position
         SGLTexture2D texture;

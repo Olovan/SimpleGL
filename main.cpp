@@ -1,8 +1,8 @@
 #include <iostream> //cout, endl;
 #include <GL/Glew.h> //GL functions
 #include <OpenGLWindow.h> //OpenGLWindow
-#include <Shader.h> //SimpleGLShader
-#include <SimpleGLProgram.h> //SimpleGLProgram
+#include <SGLShader.h> //SimpleGLShader
+#include <SGLProgram.h> //SimpleGLProgram
 #include <SGLBuffer.h>
 #include <SGLVertexArray.h>
 #include <glm/glm.hpp> //mat4
@@ -33,7 +33,7 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    SimpleGLShaderProgram shader("../../Shaders/VertexShader.glsl", "../../shaders/FragmentShader.glsl");
+    SGLShaderProgram shader("../../Shaders/VertexShader.glsl", "../../shaders/FragmentShader.glsl");
     shader.useProgram();
 
     //Set Orthographic Projection uniform variable

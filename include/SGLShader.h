@@ -7,12 +7,12 @@
 #include <glew/glew.h>
 #include <glfw/glfw3.h>
 
-class SimpleGLShader
+class SGLShader
 {
 	public:
-	    SimpleGLShader();
-	    SimpleGLShader(std::string fileName, GLuint shaderType);
-	    ~SimpleGLShader();
+	    SGLShader();
+	    SGLShader(std::string fileName, GLuint shaderType);
+	    ~SGLShader();
         bool compileFromFile(std::string fileName, GLuint shaderType);
         bool compileFromText(std::string text, GLuint shaderType);
 

@@ -1,5 +1,6 @@
 #include "SGLBoxRenderable2D.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <SGLUtility.h>
 
 #include <iostream>
 #include <cstring>
@@ -11,8 +12,6 @@ using std::endl;
 using glm::vec2;
 using glm::vec3;
 
-float radsToDegrees = 180/3.1415;
-float degreesToRads = 3.1415/180;
 
 void SGLBoxRenderable2D::setTexCoords()
 {
@@ -23,7 +22,7 @@ void SGLBoxRenderable2D::setTexCoords()
 }
 
 
-SGLBoxRenderable2D::SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::vec3 color, SimpleGLShaderProgram* program)
+SGLBoxRenderable2D::SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::vec3 color, SGLShaderProgram* program)
     : position(position), size(size), program(program)
 {
     //ctor

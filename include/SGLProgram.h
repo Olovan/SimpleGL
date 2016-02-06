@@ -5,14 +5,14 @@
 #include <string>
 #include <glm/glm.hpp>
 
-class SimpleGLShader;
+class SGLShader;
 
-class SimpleGLShaderProgram
+class SGLShaderProgram
 {
     public:
-        SimpleGLShaderProgram();
-        SimpleGLShaderProgram(std::string iVertPath, std::string iFragPath);
-        virtual ~SimpleGLShaderProgram();
+        SGLShaderProgram();
+        SGLShaderProgram(std::string iVertPath, std::string iFragPath);
+        virtual ~SGLShaderProgram();
 
         GLuint programID;
 
@@ -23,7 +23,7 @@ class SimpleGLShaderProgram
         GLuint fragShaderID = 0;
 
         void attachShader(GLuint shaderID);
-        void attachShader(SimpleGLShader shader);
+        void attachShader(SGLShader shader);
         void linkProgram();
         void validateProgram();
         void useProgram();

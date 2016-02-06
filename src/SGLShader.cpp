@@ -1,4 +1,4 @@
-#include "Shader.h"
+#include "SGLShader.h"
 
 #include <iostream> //cout endl;
 using std::cout;
@@ -8,19 +8,19 @@ using std::ifstream;
 using std::istreambuf_iterator;
 
 
-SimpleGLShader::SimpleGLShader(std::string fileName, GLuint shaderType)
+SGLShader::SGLShader(std::string fileName, GLuint shaderType)
 {
     type = shaderType;
     path = fileName.c_str();
     compileFromFile(fileName, shaderType);
 }
 
-SimpleGLShader::~SimpleGLShader()
+SGLShader::~SGLShader()
 {
     glDeleteShader(shaderID);
 }
 
-bool SimpleGLShader::compileFromFile(string fileName, GLuint shaderType)
+bool SGLShader::compileFromFile(string fileName, GLuint shaderType)
 {
     //Put text from file into String
 	ifstream file(fileName);
@@ -35,7 +35,7 @@ bool SimpleGLShader::compileFromFile(string fileName, GLuint shaderType)
     }
 }
 
-bool SimpleGLShader::compileFromText(string text, GLuint shaderType)
+bool SGLShader::compileFromText(string text, GLuint shaderType)
 {
     //Create Shader Object
     shaderID = glCreateShader(shaderType);

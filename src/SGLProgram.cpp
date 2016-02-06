@@ -1,20 +1,20 @@
-#include <SimpleGLProgram.h>
-#include <Shader.h>
+#include <SGLProgram.h>
+#include <SGLShader.h>
 #include <iostream>
 
-SimpleGLShaderProgram::SimpleGLShaderProgram()
+SGLShaderProgram::SGLShaderProgram()
 {
     //ctor
     programID = glCreateProgram();
 }
 
-SimpleGLShaderProgram::SimpleGLShaderProgram(std::string iVertPath, std::string iFragPath)
+SGLShaderProgram::SGLShaderProgram(std::string iVertPath, std::string iFragPath)
     : vertPath(iVertPath.c_str()), fragPath(iFragPath.c_str())
 {
     programID = glCreateProgram();
 
-    SimpleGLShader vertShader(iVertPath, GL_VERTEX_SHADER);
-    SimpleGLShader fragShader(iFragPath, GL_FRAGMENT_SHADER);
+    SGLShader vertShader(iVertPath, GL_VERTEX_SHADER);
+    SGLShader fragShader(iFragPath, GL_FRAGMENT_SHADER);
 
     this->attachShader(vertShader.shaderID);
     this->attachShader(fragShader.shaderID);
@@ -23,13 +23,13 @@ SimpleGLShaderProgram::SimpleGLShaderProgram(std::string iVertPath, std::string 
     this->validateProgram();
 }
 
-SimpleGLShaderProgram::~SimpleGLShaderProgram()
+SGLShaderProgram::~SGLShaderProgram()
 {
     //dtor
     glDeleteProgram(programID);
 }
 
-void SimpleGLShaderProgram::attachShader(GLuint shaderID)
+void SGLShaderProgram::attachShader(GLuint shaderID)
 {
     glAttachShader(programID, shaderID);
 
@@ -43,7 +43,7 @@ void SimpleGLShaderProgram::attachShader(GLuint shaderID)
         fragShaderID = shaderID;
 }
 
-void SimpleGLShaderProgram::attachShader(SimpleGLShader shader)
+void SGLShaderProgram::attachShader(SGLShader shader)
 {
     if(shader.type == GL_VERTEX_SHADER)
         vertPath = shader.path;
@@ -52,7 +52,7 @@ void SimpleGLShaderProgram::attachShader(SimpleGLShader shader)
     attachShader(shader.shaderID);
 }
 
-void SimpleGLShaderProgram::linkProgram()
+void SGLShaderProgram::linkProgram()
 {
     glLinkProgram(programID);
 
@@ -71,7 +71,7 @@ void SimpleGLShaderProgram::linkProgram()
     }
 }
 
-void SimpleGLShaderProgram::validateProgram()
+void SGLShaderProgram::validateProgram()
 {
     glValidateProgram(programID);
 
@@ -88,38 +88,38 @@ void SimpleGLShaderProgram::validateProgram()
     }
 }
 
-GLint SimpleGLShaderProgram::getUniformLocation(const char* name)
+GLint SGLShaderProgram::getUniformLocation(const char* name)
 {
     return glGetUniformLocation(programID, name);
 }
 
-void SimpleGLShaderProgram::useProgram()
+void SGLShaderProgram::useProgram()
 {
     glUseProgram(programID);
 }
 
 
-void SimpleGLShaderProgram::setUniform1f(const char* name, float value)
+void SGLShaderProgram::setUniform1f(const char* name, float value)
 {
     glUniform1f(getUniformLocation(name), value);
 }
-void SimpleGLShaderProgram::setUniform1i(const char* name, int value)
+void SGLShaderProgram::setUniform1i(const char* name, int value)
 {
     glUniform1i(getUniformLocation(name), value);
 }
-void SimpleGLShaderProgram::setUniform2f(const char* name, glm::vec2& value)
+void SGLShaderProgram::setUniform2f(const char* name, glm::vec2& value)
 {
     glUniform2f(getUniformLocation(name), value[0], value[1]);
 }
-void SimpleGLShaderProgram::setUniform3f(const char* name, glm::vec3& value)
+void SGLShaderProgram::setUniform3f(const char* name, glm::vec3& value)
 {
     glUniform3f(getUniformLocation(name), value[0], value[1], value[2]);
 }
-void SimpleGLShaderProgram::setUniform4f(const char* name, glm::vec4& value)
+void SGLShaderProgram::setUniform4f(const char* name, glm::vec4& value)
 {
     glUniform4f(getUniformLocation(name), value[0], value[1], value[2], value[3]);
 }
-void SimpleGLShaderProgram::setUniformMat4f(const char* name, glm::mat4& value)
+void SGLShaderProgram::setUniformMat4f(const char* name, glm::mat4& value)
 {
     glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &value[0][0]);
 }
