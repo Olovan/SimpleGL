@@ -23,15 +23,20 @@ void SGLVertexArray::deleteBuffers()
 void SGLVertexArray::addBuffer(SGLBuffer* buffer, GLuint index)
 {
     buffers.push_back(buffer);
-    glBindVertexArray(ID);
+    bind();
     glBindBuffer(GL_ARRAY_BUFFER, buffer->bufferID);
     glVertexAttribPointer(index, buffer->count, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(index);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    unbind();
 }
 
 void SGLVertexArray::bind()
 {
     glBindVertexArray(ID);
+}
+
+void SGLVertexArray::unbind()
+{
+    glBindVertexArray(0);
 }

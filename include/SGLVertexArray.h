@@ -16,6 +16,7 @@ class SGLVertexArray
         void addBuffer(SGLBuffer* buffer, GLuint index);
         void deleteBuffers();
         void bind();
+        void unbind();
 
         GLuint ID;
         vector<SGLBuffer*> buffers;
