@@ -71,6 +71,11 @@ void SGLElementArray::bind()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferID);
 }
 
+void SGLElementArray::unbind()
+{
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
 
 
 

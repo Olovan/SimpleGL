@@ -22,6 +22,7 @@ public:
 	bool appendData(GLushort data[], GLuint size);
 	void assignMemory(GLuint size);
 	void bind();
+	void unbind();
 protected:
 private:
 };
