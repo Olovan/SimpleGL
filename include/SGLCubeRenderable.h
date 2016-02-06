@@ -44,7 +44,7 @@ private:
 	GLushort elementArrayData[36] =
 	{
 	4, 6, 7,
-	4, 7, 5,
+	4, 6, 5,
 	0, 1, 2,
 	0, 2, 3,
 	4, 0, 3,

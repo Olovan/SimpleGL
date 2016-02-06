@@ -9,6 +9,7 @@
 #include <glm/gtc/matrix_transform.hpp> //glm::ortho
 #include <glm/gtx/rotate_vector.hpp> //glm::rotate
 #include <SGLBoxRenderable2D.h>
+#include <SGLCubeRenderable.h>
 #include <Vertex.h>
 
 #include <vector>
@@ -39,9 +40,11 @@ int main()
     //Set Orthographic Projection uniform variable
     float degreeToRad = 3.1415/180.0f;
 
-    glm::mat4 orthoMatrix = glm::ortho((float)0.0f, (float)800.0f, (float)0.0f, (float)600.0f);
+    glm::mat4 orthoMatrix = glm::ortho((float)0.0f, (float)800.0f, (float)0.0f, (float)600.0f, (float)-100, (float)100);
 
     shader.setUniformMat4f("projectionMatrix", orthoMatrix);
+
+    SGLCubeRenderable testCube(glm::vec3(400, 300, 0), glm::vec3(50, 100, 30), glm::vec3(1, 0, 0), &shader);
 
 
     SGLBoxRenderable2D testBox(glm::vec3(400, 300, 1.0), glm::vec2(50,50), glm::vec3(1, 0, 0), &shader);
@@ -79,12 +82,15 @@ int main()
 
 //        //rotate
         bigBox.rotate(30 * deltaFrameTime);
+        testCube.rotate(30 * deltaFrameTime, glm::vec3(0, 1, 0));
+        testCube.rotate(30 * deltaFrameTime, glm::vec3(1, 0, 0));
 //
 //        //Draw stuff
+        testCube.draw();
         testBox2.draw();
 //        testBox3.draw();
-        bigBox.draw();
-        testBox.draw();
+//        bigBox.draw();
+//        testBox.draw();
 
         //Display what we have drawn
         window.update();

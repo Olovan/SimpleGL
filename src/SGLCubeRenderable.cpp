@@ -33,6 +33,9 @@ void SGLCubeRenderable::createCube(vec3 position, vec3 size, vec3 color)
 	genVertexPositions(size);
 	setColor(color);
 	setPosition(position);
+    vertexArray.addBuffer(new SGLBuffer((float*)vertexPositions, sizeof(vertexPositions), 3), 0);
+	vertexArray.addBuffer(new SGLBuffer((float*)vertexColors, sizeof(vertexColors), 3), 1);
+//	vertexArray.addBuffer(new SGLBuffer(textureCoordinates, sizeof(textureCoordinates), 2), 2); COMMENT OUT UNTIL TEXTURES ARE FIGURED OUT
 }
 
 void SGLCubeRenderable::genVertexPositions(vec3 size)
@@ -90,7 +93,7 @@ void SGLCubeRenderable::setProgram(SGLShaderProgram* program)
 
 void SGLCubeRenderable::move(vec3 movement)
 {
-    modelMatrix = glm::translate(modelMatrix, position);
+    modelMatrix = glm::translate(modelMatrix, movement);
 }
 
 void SGLCubeRenderable::rotate(float rotation, vec3 axis)
@@ -101,10 +104,12 @@ void SGLCubeRenderable::rotate(float rotation, vec3 axis)
 
 void SGLCubeRenderable::draw()
 {
-    vertexArray.bind();
-    elementArray.bind();
+    //Set Uniforms
     program->setUniform1i("useTexture", useTexture);
     program->setUniformMat4f("modelMatrix", modelMatrix);
+    //Draw Triangles
+    vertexArray.bind();
+    elementArray.bind();
     glDrawElements(GL_TRIANGLES, elementArray.currentSize, GL_UNSIGNED_SHORT, 0);
     elementArray.unbind();
     vertexArray.unbind();
