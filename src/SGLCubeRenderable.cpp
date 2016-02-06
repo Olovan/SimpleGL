@@ -6,17 +6,19 @@
 
 SGLCubeRenderable::SGLCubeRenderable()
 {
-
+    elementArray.setData(elementArrayData, sizeof(elementArrayData));
 }
 
 SGLCubeRenderable::SGLCubeRenderable(vec3 position, vec3 size, vec3 color, SGLShaderProgram* program)
 {
+    elementArray.setData(elementArrayData, sizeof(elementArrayData));
     setProgram(program);
 	createCube(position, size, color);
 }
 
 SGLCubeRenderable::SGLCubeRenderable(vec3 position, GLuint size, vec3 color, SGLShaderProgram* program)
 {
+    elementArray.setData(elementArrayData, sizeof(elementArrayData));
     setProgram(program);
 	createCube(position, vec3(size, size, size), color);
 }
@@ -99,5 +101,11 @@ void SGLCubeRenderable::rotate(float rotation, vec3 axis)
 
 void SGLCubeRenderable::draw()
 {
-    std::cout << "REPACE ME" << std::endl;
+    vertexArray.bind();
+    elementArray.bind();
+    program->setUniform1i("useTexture", useTexture);
+    program->setUniformMat4f("modelMatrix", modelMatrix);
+    glDrawElements(GL_TRIANGLES, elementArray.currentSize, GL_UNSIGNED_SHORT, 0);
+    elementArray.unbind();
+    vertexArray.unbind();
 }

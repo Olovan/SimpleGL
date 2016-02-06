@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 #include <SGLTexture2D.h>
 #include <SGLProgram.h>
-
+#include <SGLElementArray.h>
 
 using glm::vec3;
 using glm::vec2;
@@ -35,11 +35,13 @@ private:
 	vec3 rotation;
 	vec3 origin = vec3(0, 0, 0);
 	SGLVertexArray vertexArray;
-	SGLTexture2D texture;
+	SGLTexture2D texture; //TODO figure out what to do with Texture
+	int useTexture = 0;
+	vec2 textureCoordinates[8]; //TODO figure out what to do with Texture coords
 	vec3 vertexPositions[8];
 	vec3 vertexColors[8];
-	vec2 textureCoordinates[8]; //TODO figure out what to do with Texture coords
-	GLushort elementArray[36] =
+    SGLElementArray elementArray;
+	GLushort elementArrayData[36] =
 	{
 	4, 6, 7,
 	4, 7, 5,
