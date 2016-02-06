@@ -49,7 +49,7 @@ void SGLBoxRenderable2D::draw()
     elementArrayBuffer.bind();
     texture.bind();
     program->setUniform1i("useTexture", useTexture);
-    glDrawElements(GL_TRIANGLES, elementArrayBuffer.size, GL_UNSIGNED_SHORT, 0);
+    glDrawElements(GL_TRIANGLES, elementArrayBuffer.currentSize, GL_UNSIGNED_SHORT, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
