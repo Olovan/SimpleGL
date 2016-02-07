@@ -30,6 +30,7 @@ SGLCubeRenderable::~SGLCubeRenderable()  //Destructor
 void SGLCubeRenderable::createCube(vec3 position, vec3 size, vec3 color)
 {
 	setOrigin(0, 0, 0);
+	this->size = size;
 	genVertexPositions(size);
 	setColor(color);
 	setPosition(position);
@@ -62,14 +63,21 @@ void SGLCubeRenderable::setColor(vec3 color)
     vertexColors[7] = color;
 }
 
+void SGLCubeRenderable::setColor(GLuint vert, vec3 color)
+{
+    vertexColors[vert] = color;
+}
+
 void SGLCubeRenderable::setOrigin(float x, float y, float z)
 {
     origin = vec3(x, y, z);
+    genVertexPositions(size);
 }
 
 void SGLCubeRenderable::setOrigin(vec3 origin)
 {
     this->origin = origin;
+    genVertexPositions(size);
 }
 
 void SGLCubeRenderable::setPosition(vec3 position)
@@ -113,4 +121,11 @@ void SGLCubeRenderable::draw()
     glDrawElements(GL_TRIANGLES, elementArray.currentSize, GL_UNSIGNED_SHORT, 0);
     elementArray.unbind();
     vertexArray.unbind();
+}
+
+void SGLCubeRenderable::resetVertexArray()
+{
+    vertexArray.deleteBuffers();
+    vertexArray.addBuffer(new SGLBuffer((float*)vertexPositions, sizeof(vertexPositions), 3), 0);
+	vertexArray.addBuffer(new SGLBuffer((float*)vertexColors, sizeof(vertexColors), 3), 1);
 }

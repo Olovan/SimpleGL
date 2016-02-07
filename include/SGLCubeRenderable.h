@@ -21,11 +21,13 @@ public:
 	~SGLCubeRenderable();
 
 	void draw() override;
+	void resetVertexArray();
 	void setPosition(vec3 position);
 	void move(vec3 movement);
 	void setRotation(vec3 rotation);
 	void rotate(float rotation, vec3 axis);
 	void setColor(vec3 color);
+	void setColor(GLuint vert, vec3 color);
 	void setOrigin(vec3 origin);
 	void setOrigin(float x, float y, float z);
 	void setProgram(SGLShaderProgram* program);
@@ -34,6 +36,7 @@ private:
 	vec3 position;
 	vec3 rotation;
 	vec3 origin = vec3(0, 0, 0);
+	vec3 size = vec3(0, 0, 0);
 	SGLVertexArray vertexArray;
 	SGLTexture2D texture; //TODO figure out what to do with Texture
 	int useTexture = 0;
@@ -58,7 +61,6 @@ private:
 	};
 
 	void createCube(vec3 position, vec3 size, vec3 color);
-	void resetVertexArray();
 	void genVertexPositions(vec3 size);
 	SGLShaderProgram* program;
 };

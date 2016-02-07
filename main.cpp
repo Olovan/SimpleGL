@@ -30,7 +30,7 @@ int main()
     std::srand(std::time(0)); //Seed Random
 
     OpenGLWindow window;
-    glfwSwapInterval(0);
+    glfwSwapInterval(1);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -40,16 +40,25 @@ int main()
     //Set Orthographic Projection uniform variable
     float degreeToRad = 3.1415/180.0f;
 
-    glm::mat4 orthoMatrix = glm::ortho((float)0.0f, (float)800.0f, (float)0.0f, (float)600.0f, (float)-100, (float)100);
+    glm::mat4 orthoMatrix = glm::ortho((float)0.0f, (float)800.0f, (float)0.0f, (float)600.0f, (float)-200, (float)200);
 
     shader.setUniformMat4f("projectionMatrix", orthoMatrix);
 
-    SGLCubeRenderable testCube(glm::vec3(400, 300, 0), glm::vec3(50, 100, 30), glm::vec3(1, 0, 0), &shader);
+    SGLCubeRenderable testCube(glm::vec3(400, 300, 50), glm::vec3(50, 100, 30), glm::vec3(1, 0, 0), &shader);
+    testCube.setOrigin((float)-25, (float)-50, (float)-15);
+    testCube.setColor(1, vec3(1, 1, 0));
+    testCube.setColor(2, vec3(1, 1, 1));
+    testCube.setColor(3, vec3(0, 1, 1));
+    testCube.setColor(4, vec3(0, 1, 1));
+    testCube.setColor(5, vec3(1, 1, 1));
+    testCube.setColor(6, vec3(1, 1, 0));
+    testCube.setColor(7, vec3(1, 0.5, 0));
+    testCube.resetVertexArray();
 
 
     SGLBoxRenderable2D testBox(glm::vec3(400, 300, 1.0), glm::vec2(50,50), glm::vec3(1, 0, 0), &shader);
     SGLBoxRenderable2D testBox2(glm::vec3(100, 300, 0.5), glm::vec2(50,50), glm::vec3(0, 0, 1), &shader);
-//    SGLBoxRenderable2D testBox3(glm::vec3(300, 200, 1.0), glm::vec2(50,50), glm::vec3(1, 1, 0), &shader);
+    SGLBoxRenderable2D testBox3(glm::vec3(300, 200, 1.0), glm::vec2(50,50), glm::vec3(1, 1, 0), &shader);
 //
 //
     SGLBoxRenderable2D bigBox (glm::vec3(400, 300, 0), glm::vec2(600, 600), glm::vec3(1, 1, 1), &shader);
@@ -82,15 +91,14 @@ int main()
 
 //        //rotate
         bigBox.rotate(30 * deltaFrameTime);
-        testCube.rotate(30 * deltaFrameTime, glm::vec3(0, 1, 0));
-        testCube.rotate(30 * deltaFrameTime, glm::vec3(1, 0, 0));
+        testCube.rotate(-30 * deltaFrameTime, glm::vec3(1, 1, 1));
 //
 //        //Draw stuff
         testCube.draw();
         testBox2.draw();
-//        testBox3.draw();
-//        bigBox.draw();
-//        testBox.draw();
+        testBox3.draw();
+        bigBox.draw();
+        testBox.draw();
 
         //Display what we have drawn
         window.update();
