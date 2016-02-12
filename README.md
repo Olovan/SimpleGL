@@ -11,3 +11,5 @@ Simple Implementation of OpenGL
 - Increase ease of use
 - Set up Textures
 - Set up Lighting system
+- Set up Moveable Camera
+- Set up 3D projection Matrix
