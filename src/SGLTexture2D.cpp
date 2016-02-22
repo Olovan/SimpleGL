@@ -1,6 +1,7 @@
 #include "SGLTexture2D.h"
 
-#include <stb_image.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include <STBImage.h>
 #include <iostream>
 
 using std::cout;

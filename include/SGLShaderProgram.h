@@ -1,7 +1,7 @@
 #ifndef SIMPLEGLPROGRAM_H
 #define SIMPLEGLPROGRAM_H
 
-#include <glew/glew.h>
+#include <GL/glew.h>
 #include <string>
 #include <glm/glm.hpp>
 

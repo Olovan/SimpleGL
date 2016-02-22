@@ -1,3 +1,4 @@
+
 /* stb_image - v2.10 - public domain image loader - http://nothings.org/stb_image.h
                                      no warranty implied; use at your own risk
 
@@ -218,6 +219,8 @@ distribute, and modify this file as you see fit.
 #ifndef STBI_INCLUDE_STB_IMAGE_H
 #define STBI_INCLUDE_STB_IMAGE_H
 
+
+
 // DOCUMENTATION
 //
 // Limitations:
@@ -406,6 +409,8 @@ enum
 
 typedef unsigned char stbi_uc;
 
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -424,6 +429,8 @@ extern "C" {
 //
 // load image by filename, open file, or memory buffer
 //
+
+
 
 typedef struct
 {

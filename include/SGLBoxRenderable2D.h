@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <SGLVertexArray.h>
 #include <SGLElementArray.h>
-#include <SGLProgram.h>
+#include <SGLShaderProgram.h>
 #include <SGLTexture2D.h>
 
 using glm::vec2;

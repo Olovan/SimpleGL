@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <SGLTexture2D.h>
-#include <SGLProgram.h>
+#include <SGLShaderProgram.h>
 #include <SGLElementArray.h>
 
 using glm::vec3;

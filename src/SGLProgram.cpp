@@ -1,4 +1,4 @@
-#include <SGLProgram.h>
+#include <SGLShaderProgram.h>
 #include <SGLShader.h>
 #include <iostream>
 

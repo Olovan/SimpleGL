@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <cstring>
-#include <stb_image.h>
+#include <STBImage.h>
 
 using std::cout;
 using std::endl;

@@ -4,3 +4,8 @@
 *.o
 *.exe
 *.*~
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+*/CMakeFiles/*
+tags

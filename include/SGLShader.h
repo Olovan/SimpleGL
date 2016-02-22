@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 #include <streambuf>
-#include <glew/glew.h>
+#include <GL/glew.h>
 #include <glfw/glfw3.h>
 
 class SGLShader
