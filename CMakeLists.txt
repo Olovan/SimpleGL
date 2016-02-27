@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 project (SimpleGL) #Set Project name
-set (CMAKE_CXX_STANDARD 11)
-cmake_policy(SET CMP0015 NEW)
+
+set (CMAKE_CXX_STANDARD 11) #Force C++11 standards for access to std libraries
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+cmake_policy(SET CMP0015 NEW) #Enforce new cmake policy to convert relative paths to absolute paths
 
 #Set Defines
 add_definitions( -DGLFW-STATIC -DGLEW_STATIC -static )      

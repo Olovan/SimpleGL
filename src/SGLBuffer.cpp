@@ -31,7 +31,7 @@ void SGLBuffer::assignData(float data[], GLuint size, GLuint count)
     this->count = count;
     glBindBuffer(GL_ARRAY_BUFFER, bufferID);
     glBufferData(GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, NULL);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void SGLBuffer::assignData(Vertex data[], GLuint size)
