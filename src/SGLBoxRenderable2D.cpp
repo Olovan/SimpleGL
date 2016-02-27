@@ -22,7 +22,7 @@ void SGLBoxRenderable2D::setTexCoords()
 }
 
 
-SGLBoxRenderable2D::SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::vec3 color, SGLShaderProgram* program)
+SGLBoxRenderable2D::SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::vec3 color)
     : position(position), size(size), program(program)
 {
     //ctor
@@ -42,7 +42,7 @@ SGLBoxRenderable2D::~SGLBoxRenderable2D()
     //dtor
 }
 
-void SGLBoxRenderable2D::draw()
+void SGLBoxRenderable2D::draw(SGLShaderProgram * program)
 {
     program->setUniformMat4f("modelMatrix", modelMatrix);
     vertexArray.bind();

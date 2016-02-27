@@ -19,11 +19,11 @@ class SGLCubeRenderable : public SGLRenderable
 {
 public:
 	SGLCubeRenderable();
-	SGLCubeRenderable(vec3 position, vec3 size, vec3 color, SGLShaderProgram* program);
-	SGLCubeRenderable(vec3 position, GLuint size, vec3 color, SGLShaderProgram* program);
+	SGLCubeRenderable(vec3 position, vec3 size, vec3 color);
+	SGLCubeRenderable(vec3 position, GLuint size, vec3 color);
 	~SGLCubeRenderable();
 
-	void draw() override;
+	void draw(SGLShaderProgram * program) override;
 	void resetVertexArray();
 	void move(vec3 movement);
 	void rotate(float rotation, vec3 axis);

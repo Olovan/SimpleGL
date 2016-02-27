@@ -9,14 +9,14 @@ SGLCubeRenderable::SGLCubeRenderable()
     elementArray.setData(elementArrayData, sizeof(elementArrayData));
 }
 
-SGLCubeRenderable::SGLCubeRenderable(vec3 position, vec3 size, vec3 color, SGLShaderProgram* program)
+SGLCubeRenderable::SGLCubeRenderable(vec3 position, vec3 size, vec3 color)
 {
     elementArray.setData(elementArrayData, sizeof(elementArrayData));
     setProgram(program);
 	createCube(position, size, color);
 }
 
-SGLCubeRenderable::SGLCubeRenderable(vec3 position, GLuint size, vec3 color, SGLShaderProgram* program)
+SGLCubeRenderable::SGLCubeRenderable(vec3 position, GLuint size, vec3 color)
 {
     elementArray.setData(elementArrayData, sizeof(elementArrayData));
     setProgram(program);
@@ -110,7 +110,7 @@ void SGLCubeRenderable::rotate(float rotation, vec3 axis)
     modelMatrix = glm::rotate(modelMatrix, radsRotation, axis);
 }
 
-void SGLCubeRenderable::draw()
+void SGLCubeRenderable::draw(SGLShaderProgram * program)
 {
     //Set Uniforms
     program->setUniform1i("useTexture", useTexture);

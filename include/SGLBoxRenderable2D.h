@@ -14,7 +14,7 @@ using glm::vec3;
 class SGLBoxRenderable2D : public SGLRenderable
 {
     public:
-        SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::vec3 color, SGLShaderProgram* program);
+        SGLBoxRenderable2D(glm::vec3 position, glm::vec2 size, glm::vec3 color);
         virtual ~SGLBoxRenderable2D();
 
         glm::vec3 position;
@@ -33,7 +33,7 @@ class SGLBoxRenderable2D : public SGLRenderable
         SGLVertexArray vertexArray;
         SGLElementArray elementArrayBuffer;
 
-        void draw() override;
+        void draw(SGLShaderProgram * program) override;
         void setSize(glm::vec2 size);
         void setColor(glm::vec3 color);
         void setPosition(glm::vec3 position);

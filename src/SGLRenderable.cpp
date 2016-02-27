@@ -10,7 +10,7 @@ SGLRenderable::~SGLRenderable()
     //dtor
 }
 
-void SGLRenderable::draw()
+void SGLRenderable::draw(SGLShaderProgram * program)
 {
 
 }

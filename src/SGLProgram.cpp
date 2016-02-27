@@ -101,25 +101,31 @@ void SGLShaderProgram::useProgram()
 
 void SGLShaderProgram::setUniform1f(const char* name, float value)
 {
+	useProgram();
     glUniform1f(getUniformLocation(name), value);
 }
 void SGLShaderProgram::setUniform1i(const char* name, int value)
 {
+	useProgram();
     glUniform1i(getUniformLocation(name), value);
 }
 void SGLShaderProgram::setUniform2f(const char* name, glm::vec2& value)
 {
+	useProgram();
     glUniform2f(getUniformLocation(name), value[0], value[1]);
 }
 void SGLShaderProgram::setUniform3f(const char* name, glm::vec3& value)
 {
+	useProgram();
     glUniform3f(getUniformLocation(name), value[0], value[1], value[2]);
 }
 void SGLShaderProgram::setUniform4f(const char* name, glm::vec4& value)
 {
+	useProgram();
     glUniform4f(getUniformLocation(name), value[0], value[1], value[2], value[3]);
 }
 void SGLShaderProgram::setUniformMat4f(const char* name, glm::mat4& value)
 {
+	useProgram();
     glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &value[0][0]);
 }

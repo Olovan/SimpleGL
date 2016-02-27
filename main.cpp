@@ -5,6 +5,7 @@
 #include <SGLCamera.h>
 #include <SGLShader.h> //SimpleGLShader
 #include <SGLShaderProgram.h> //SimpleGLProgram
+#include <SGLRenderer.h>
 #include <SGLBuffer.h>
 #include <SGLVertexArray.h>
 #include <glm/glm.hpp> //mat4
@@ -36,23 +37,23 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    SGLShaderProgram shader("../Shaders/VertexShader.glsl", "../shaders/FragmentShader.glsl");
-    shader.useProgram();
+    //SGLShaderProgram shader("../Shaders/VertexShader.glsl", "../shaders/FragmentShader.glsl");
+    //shader.useProgram();
+
 
     //Set Orthographic Projection uniform variable
     float degreeToRad = 3.1415/180.0f;
-
-    glm::mat4 projectionMatrix = glm::perspective(45.0f, (float)window.width/(float)window.height, 0.01f, 500.0f);
-    //glm::mat4 viewMatrix = glm::lookAt(vec3(400,300,190), vec3(400,300,0), vec3(0,1,0));
+    //Create Camera and Projection Matrix
     SGLCamera camera;
     camera.setBoth(vec3(400, 300, 190), vec2(0, 180));
+    glm::mat4 projectionMatrix = glm::perspective(45.0f, (float)window.width/(float)window.height, 0.01f, 500.0f);
 
-    //viewMatrix = glm::translate(viewMatrix, vec3(400,300,0));
+    SGLRenderer basicRenderer("../Shaders/VertexShader.glsl", "../shaders/FragmentShader.glsl"); 
 
-    shader.setUniformMat4f("projectionMatrix", projectionMatrix);
-    shader.setUniformMat4f("viewMatrix", camera.viewMatrix);
+    basicRenderer.shaderProgram.setUniformMat4f("projectionMatrix", projectionMatrix);
+    basicRenderer.shaderProgram.setUniformMat4f("viewMatrix", camera.viewMatrix);
 
-    SGLCubeRenderable testCube(glm::vec3(400, 300, 50), glm::vec3(10, 10, 10), glm::vec3(1, 0, 0), &shader);
+    SGLCubeRenderable testCube(glm::vec3(400, 300, 50), glm::vec3(10, 10, 10), glm::vec3(1, 0, 0));
     testCube.setOrigin((float)5, (float)5, (float)5);
     testCube.setColor(1, vec3(1, 1, 0));
     testCube.setColor(2, vec3(1, 1, 1));
@@ -64,12 +65,11 @@ int main()
     testCube.resetVertexArray();
 
 
-    SGLBoxRenderable2D testBox(glm::vec3(400, 300, 1.0), glm::vec2(50,50), glm::vec3(1, 0, 0), &shader);
-    SGLBoxRenderable2D testBox2(glm::vec3(100, 300, 0.5), glm::vec2(50,50), glm::vec3(0, 0, 1), &shader);
-    SGLBoxRenderable2D testBox3(glm::vec3(300, 200, 1.0), glm::vec2(50,50), glm::vec3(1, 1, 0), &shader);
-//
-//
-    SGLBoxRenderable2D bigBox (glm::vec3(400, 300, 0), glm::vec2(600, 600), glm::vec3(1, 1, 1), &shader);
+    SGLBoxRenderable2D testBox(glm::vec3(400, 300, 1.0), glm::vec2(50,50), glm::vec3(1, 0, 0));
+    SGLBoxRenderable2D testBox2(glm::vec3(100, 300, 0.5), glm::vec2(50,50), glm::vec3(0, 0, 1));
+    SGLBoxRenderable2D testBox3(glm::vec3(300, 200, 1.0), glm::vec2(50,50), glm::vec3(1, 1, 0));
+
+    SGLBoxRenderable2D bigBox (glm::vec3(400, 300, 0), glm::vec2(600, 600), glm::vec3(1, 1, 1));
     bigBox.vertexColors[0] = glm::vec3(1, 0, 0);
     bigBox.vertexColors[2] = glm::vec3(0, 1, 0);
     bigBox.vertexColors[3] = glm::vec3(0, 0, 1);
@@ -88,6 +88,12 @@ int main()
 
     double previousMouseX = 0;
     double previousMouseY = 0;
+
+
+
+
+
+
     while(window.isOpen())
     {
 	double mouseX, mouseY;
@@ -105,20 +111,18 @@ int main()
         //rotate camera
         camera.rotate(range(mouseY - previousMouseY, -10.0, 10.0), -1 * range(mouseX - previousMouseX, -10.0, 10.0));
 	camera.setRotation(vec2(range(camera.getRotation().x, -90.0f, 90.0f), camera.getRotation().y)); //Don't let the camera go upside down
-		
-	
-        shader.setUniformMat4f("viewMatrix", camera.viewMatrix);
+	basicRenderer.shaderProgram.setUniformMat4f("viewMatrix", camera.viewMatrix);
 
-//        //rotate
+        //rotate
         bigBox.rotate(30 * deltaFrameTime);
         testCube.rotate(-30 * deltaFrameTime, glm::vec3(1, 1, 1));
-//
-//        //Draw stuff
-        testCube.draw();
-        testBox2.draw();
-        testBox3.draw();
-        bigBox.draw();
-        testBox.draw();
+
+        //Draw stuff
+        basicRenderer.draw(testCube);
+        basicRenderer.draw(testBox2);
+        basicRenderer.draw(testBox3);
+        basicRenderer.draw(bigBox);
+	basicRenderer.draw(testCube);
 
         //Display what we have drawn
         window.update();

@@ -1,6 +1,7 @@
 #ifndef SGLRENDERABLE_H
 #define SGLRENDERABLE_H
 
+#include <SGLShaderProgram.h>
 
 class SGLRenderable
 {
@@ -8,7 +9,7 @@ class SGLRenderable
         SGLRenderable();
         virtual ~SGLRenderable();
 
-        virtual void draw();
+        virtual void draw(SGLShaderProgram * program);
 
     protected:
     private:

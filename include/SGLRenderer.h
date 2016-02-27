@@ -15,14 +15,14 @@ public:
 	SGLRenderer(std::string vertShaderPath, std::string fragShaderPath);
 	~SGLRenderer();
 
-	void draw(SGLRenderable target);
+	void draw(SGLRenderable &target);
 	void attachShaders(std::string vertShaderPath, std::string fragShaderPath);
 	void attachShaders(SGLShader vertShader, SGLShader fragShader);
 		
+	SGLShaderProgram shaderProgram;
 	SGLShaderProgram getShaderProgram();
 private:
 	/* data */
-	SGLShaderProgram shaderProgram;
 	SGLShader vertShader;
 	SGLShader fragShader;
 };
