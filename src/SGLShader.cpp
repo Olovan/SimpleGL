@@ -7,11 +7,13 @@ using std::string;
 using std::ifstream;
 using std::istreambuf_iterator;
 
+SGLShader::SGLShader() 
+{
+	
+}
 
 SGLShader::SGLShader(std::string fileName, GLuint shaderType)
 {
-    type = shaderType;
-    path = fileName.c_str();
     compileFromFile(fileName, shaderType);
 }
 
@@ -22,6 +24,8 @@ SGLShader::~SGLShader()
 
 bool SGLShader::compileFromFile(string fileName, GLuint shaderType)
 {
+	type = shaderType;
+	path = fileName.c_str();
     //Put text from file into String
 	ifstream file(fileName);
 	if (file) //Make Sure file exists

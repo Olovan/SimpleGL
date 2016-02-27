@@ -1,11 +1,21 @@
+#CodeBlocks Files
 *.layout
 *.depend
 *.cbp
+
+#Objects and Executable
 *.o
 *.exe
+
+#Vim Files
+*.swp
 *.*~
+
+#Cmake Stuff
 CMakeCache.txt
 Makefile
 cmake_install.cmake
 */CMakeFiles/*
+
+#Ctags tag file
 tags

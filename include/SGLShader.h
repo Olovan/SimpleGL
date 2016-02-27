@@ -13,8 +13,8 @@ class SGLShader
 	    SGLShader();
 	    SGLShader(std::string fileName, GLuint shaderType);
 	    ~SGLShader();
-        bool compileFromFile(std::string fileName, GLuint shaderType);
-        bool compileFromText(std::string text, GLuint shaderType);
+            bool compileFromFile(std::string fileName, GLuint shaderType);
+            bool compileFromText(std::string text, GLuint shaderType);
 
         GLuint shaderID;
         GLint type;

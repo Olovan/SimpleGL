@@ -1,3 +1,6 @@
+#ifndef SIMPLEGL_CUBERENDERABLE
+#define SIMPLEGL_CUBERENDERABLE 
+
 #include <Vertex.h>
 #include <SGLRenderable.h>
 #include <SGLVertexArray.h>
@@ -22,10 +25,10 @@ public:
 
 	void draw() override;
 	void resetVertexArray();
-	void setPosition(vec3 position);
 	void move(vec3 movement);
-	void setRotation(vec3 rotation);
 	void rotate(float rotation, vec3 axis);
+	void setPosition(vec3 position);
+	void setRotation(vec3 rotation);
 	void setColor(vec3 color);
 	void setColor(GLuint vert, vec3 color);
 	void setOrigin(vec3 origin);
@@ -64,3 +67,6 @@ private:
 	void genVertexPositions(vec3 size);
 	SGLShaderProgram* program;
 };
+
+
+#endif /* ifndef SIMPLEGL_CUBERENDERABLE */
