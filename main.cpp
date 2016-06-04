@@ -1,6 +1,6 @@
 #include <SGLUtility.h>
 #include <iostream> //cout, endl;
-#include <GL/Glew.h> //GL functions
+#include <GL/glew.h> //GL functions
 #include <OpenGLWindow.h> //OpenGLWindow
 #include <SGLCamera.h>
 #include <SGLShader.h> //SimpleGLShader

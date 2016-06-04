@@ -1,7 +1,7 @@
 #ifndef SIMPLEGL_RENDERER
 #define SIMPLEGL_RENDERER 
 
-#include <GL/Glew.h>
+#include <GL/glew.h>
 #include <SGLShader.h>
 #include <SGLShaderProgram.h>
 #include <SGLRenderable.h>

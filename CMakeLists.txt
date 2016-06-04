@@ -6,7 +6,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 cmake_policy(SET CMP0015 NEW) #Enforce new cmake policy to convert relative paths to absolute paths
 
 #Set Defines
-add_definitions( -DGLFW-STATIC -DGLEW_STATIC -static )      
+add_definitions()      
 
 #add include to include directories
 include_directories(include)
